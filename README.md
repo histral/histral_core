@@ -1,6 +1,6 @@
 # 🧠 Histral Core
 
-[![Unit Tests for HistralCore](https://github.com/histral/histral_core/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/histral/histral_core/actions/workflows/unit_tests.yml)
+[![Unit Tests](https://github.com/histral/histral_core/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/histral/histral_core/actions/workflows/unit_tests.yml)
 
 Set of modules used in various **Histral** repositories.
 
