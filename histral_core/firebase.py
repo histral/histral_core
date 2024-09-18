@@ -62,7 +62,9 @@ class _FirebaseOptions(Enum):
 def _get_firestore_db():
     """
     Initialize the Firestore database using Firebase credentials from environment variables.
+
     **Returns**: `firestore.client`: _The Firestore client instance._
+
     **Raises**: `Exception`: _If initialization of Firebase fails._
     """
 
@@ -128,12 +130,15 @@ def post_news_list(
     """
     Upload news data to Firestore. If the document exists, it updates the data;
     otherwise, it creates a new entry.
+
     **Args**:
         `DATA (List)`: _List of news articles._
         `current_date (datetime)`: _Current date for document ID generation._
         `category (Category)`: _Category of news (Enum)._
         `outlet_code (OutletCode)`: _News outlet code (Enum)._
+
     **Returns**: `None`
+
     **Raises**: `Exception` _If an error occurs during data upload to Firestore._
     """
 
@@ -149,10 +154,18 @@ def post_news_list(
             if doc.exists:
                 # Update the document if it exists
                 doc_ref.update(data)
+
+                Logger.info(
+                    f"INFO: Stored ({category.value}:{len(DATA)}) news in firestore"
+                )
             else:
                 # Document doesn't exist, create a new one
                 doc_ref.set(data)
+
                 Logger.warning("WARN: New entry created as document was not found.")
+                Logger.info(
+                    f"INFO: Updated ({category.value}:{len(DATA)}) news in firestore"
+                )
         except Exception as e:
             Logger.error(f"ERROR: Failed to update or create Firestore document: {e}")
             raise
@@ -168,10 +181,13 @@ def fetch_news_list(
 ) -> Dict:
     """
     Retrieve news data from Firestore for a given category and date.
+
     **Args**:
         `current_date (datetime)`: _The date for which to retrieve news data._
         `category (Category)`: _Category of news (Enum)._
+
     **Returns**: `Dict` _Dictionary containing the news data_
+
     **Raises**:
         `ValueError`: _If no data is found for the specified document._
         `Exception`: _If an error occurs during Firestore data retrieval._
@@ -187,8 +203,12 @@ def fetch_news_list(
 
         # Check if data exists
         if doc_data.exists:
+            data_dict = doc_data.to_dict()
+
             Logger.info(f"INFO: Data retrieved for {doc_ref.path}")
-            return doc_data.to_dict()
+            Logger.info(f"INFO: Retrieved news for {len(data_dict)} outlets")
+
+            return data_dict
         else:
             Logger.error(f"FATAL: No data found for document {doc_ref.path}")
             raise ValueError(f"No data found in {doc_ref.path}")

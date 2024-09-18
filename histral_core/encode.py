@@ -16,6 +16,7 @@ Logger.basicConfig(
 def encode_text(text: str, shouldLog: bool = False) -> str:
     """
     Compress and Encode [text] using `zlib` and `base64`
+    
     **Args**:
         `shouldLog (Boolean)`: _Decide whether function should log reduction
         info or not. Defaults to **False**_
