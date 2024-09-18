@@ -3,14 +3,14 @@ import requests
 
 from unittest.mock import patch, MagicMock
 from bs4 import BeautifulSoup
-from histral_core.scraper import fetch_soup  
+from histral_core.scraper import fetch_soup
 
 class TestScraper(unittest.TestCase):
     """
-    Unit tests for `core.scraper` module
+    Unit tests for `histral_core.scraper` module
     """
     
-    @patch('core.scraper.requests.get')
+    @patch('histral_core.scraper.requests.get')
     def test_fetch_soup_success(self, mock_get):
         mock_response = MagicMock()
         mock_response.content = b"<html><body><h1>Test</h1></body></html>"
@@ -22,24 +22,24 @@ class TestScraper(unittest.TestCase):
         self.assertIsInstance(soup, BeautifulSoup)
         self.assertEqual(soup.h1.text, "Test")
     
-    @patch('core.scraper.requests.get')
+    @patch('histral_core.scraper.requests.get')
     def test_fetch_soup_http_error(self, mock_get):
         mock_get.side_effect = requests.exceptions.HTTPError("404 Not Found")
         
         url = "http://example.com"
-        with patch('core.scraper.Logger.error') as mock_log:
+        with patch('histral_core.scraper.Logger.error') as mock_log:
             soup = fetch_soup(url)
             self.assertIsNone(soup)
             self.assertTrue(mock_log.called)
             log_message = mock_log.call_args[0][0]
             self.assertIn("Failed to fetch URL", log_message)
     
-    @patch('core.scraper.requests.get')
+    @patch('histral_core.scraper.requests.get')
     def test_fetch_soup_request_exception(self, mock_get):
         mock_get.side_effect = requests.exceptions.RequestException("Request failed")
         
         url = "http://example.com"
-        with patch('core.scraper.Logger.error') as mock_log:
+        with patch('histral_core.scraper.Logger.error') as mock_log:
             soup = fetch_soup(url)
             self.assertIsNone(soup)
             self.assertTrue(mock_log.called)
