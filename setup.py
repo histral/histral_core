@@ -8,7 +8,7 @@ with open("requirements.txt") as f:
 
 setup(
     name="histral_core",
-    version="0.1",
+    version="0.1.1",
     packages=find_packages(),
     install_requires=required,
     description="Set of modules used in various Histral repositories.",

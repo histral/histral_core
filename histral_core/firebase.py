@@ -144,18 +144,17 @@ def post_news_list(
         data = {outlet_code.value: DATA}
 
         try:
-            # Try to update the document
-            doc_ref.update(data)
-            Logger.info(f"INFO: Updated *{len(DATA)}* news in Firestore.")
-        except firestore.NotFound as nf:
-            # Document doesn't exist, create a new one
-            doc_ref.set(data)
-            Logger.info(f"INFO: Uploaded {len(DATA)} news to Firestore (new document).")
-            Logger.warning(
-                f"WARN: New entry created because document was not found: {nf}"
-            )
+            # Try to get the document
+            doc = doc_ref.get()
+            if doc.exists:
+                # Update the document if it exists
+                doc_ref.update(data)
+            else:
+                # Document doesn't exist, create a new one
+                doc_ref.set(data)
+                Logger.warning("WARN: New entry created as document was not found.")
         except Exception as e:
-            Logger.error(f"ERROR: Failed to update Firestore: {e}")
+            Logger.error(f"ERROR: Failed to update or create Firestore document: {e}")
             raise
 
     except Exception as e:
