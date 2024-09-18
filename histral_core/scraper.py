@@ -3,7 +3,8 @@ import logging as Logger
 
 from bs4 import BeautifulSoup
 
-# Config for custom logging 
+
+# Config for custom logging
 Logger.basicConfig(
     level=Logger.INFO,
     format="[%(levelname)s] (%(asctime)s) -> %(message)s",
@@ -17,6 +18,7 @@ def fetch_soup(URL: str):
     """
     Fetch HTML data for given [URL]
     """
+
     try:
         base_page_data = requests.get(URL, timeout=30)
 

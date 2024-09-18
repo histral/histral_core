@@ -4,7 +4,8 @@ from sumy.nlp.tokenizers import Tokenizer
 from sumy.summarizers.lsa import LsaSummarizer
 from sumy.parsers.plaintext import PlaintextParser
 
-# Config for custom logging 
+
+# Config for custom logging
 Logger.basicConfig(
     level=Logger.INFO,
     format="[%(levelname)s] (%(asctime)s) -> %(message)s",
@@ -16,9 +17,10 @@ Logger.basicConfig(
 
 def extractive_summary(text: str, percentage: float = 0.25) -> str:
     """
-    Summarize [str] locally with max length calculated with respect 
+    Summarize [str] locally with max length calculated with respect
     to [percentage] and max len is `1200`
     """
+
     expected_len = min(len(text) * percentage, 1200)
 
     try:

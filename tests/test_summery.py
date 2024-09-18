@@ -7,7 +7,6 @@ class TestSummary(unittest.TestCase):
     """
     Unit tests for `histral_core.summery` module
     """
-
     def test_extractive_summary_success(self):
         # Large text to ensure summarization
         text = "This is a test document. " * 50

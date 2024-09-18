@@ -8,7 +8,6 @@ class TestEncode(unittest.TestCase):
     """
     Unit tests for `histral_core.encode` module
     """
-
     def test_encode_and_decoding_success(self):
         text = "Hello, World!"
         encoded = encode_text(text)
